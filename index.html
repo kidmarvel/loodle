@@ -2,75 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Record of Ragnarok Progress Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sutra Scans</title>
+  <link rel="icon" type="image/png" href="sutra.png">
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #121212;
-      color: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      font-family: Arial, sans-serif;
     }
     header {
-      padding: 20px;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      max-width: 600px;
-    }
-    .buttons {
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .buttons a {
-      background: #3498db;
-      color: white;
-      text-decoration: none;
-      padding: 15px 30px;
-      border-radius: 10px;
-      font-size: 1.2em;
-      transition: background 0.3s;
-    }
-    .buttons a:hover {
-      background: #2980b9;
-    }
-    footer {
-      margin-top: auto;
+      align-items: center;
       padding: 10px;
-      font-size: 0.9em;
-      color: #888;
+      background: #111;
+      color: #fff;
+    }
+    header img {
+      height: 50px;
+      margin-right: 10px;
+    }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+    .hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Record of Ragnarok Tracker</h1>
-    <p>Welcome! Here you can track the ongoing battles in the Record of Ragnarok series. 
-      Choose whether you want to view the progress based on the Manga or the Anime!</p>
+    <img src="sutra.png" alt="Sutra Scans Logo">
+    <h1>Sutra Scans</h1>
   </header>
 
-  <div class="buttons">
-    <a href="manga.html">Manga Progress</a>
-    <a href="anime.html">Anime Progress</a>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Record of Ragnarok Fan Project</p>
-  </footer>
+  <section class="hero">
+    <video src="banner.mp4" autoplay muted loop playsinline></video>
+  </section>
 
 </body>
 </html>

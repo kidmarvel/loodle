@@ -2,100 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Anime Progress - Record of Ragnarok</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sutra Scans - Anime Progress</title>
+  <link rel="icon" type="image/png" href="sutra.png">
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #121212;
-      color: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
     }
     header {
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    nav a {
-      color: #3498db;
-      text-decoration: none;
-      margin: 0 10px;
-      font-size: 1.1em;
-    }
-    table {
-      width: 90%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #333;
-      padding: 12px;
-      text-align: center;
-    }
-    th {
-      background-color: #222;
-    }
-    .victory {
-      background-color: #1e3d2f;
-    }
-    .defeat {
-      background-color: #512727;
-    }
-    .ongoing {
-      background-color: #5a4b26;
-    }
-    footer {
-      margin-top: auto;
-      text-align: center;
+      display: flex;
+      align-items: center;
       padding: 10px;
-      color: #888;
+      background: #111;
+      color: #fff;
+    }
+    header img {
+      height: 50px;
+      margin-right: 10px;
+    }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+    .hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Anime Progress</h1>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="manga.html">Manga Progress</a>
-  </nav>
-</header>
+  <header>
+    <img src="sutra.png" alt="Sutra Scans Logo">
+    <h1>Sutra Scans - Anime Progress</h1>
+  </header>
 
-<table>
-  <tr>
-    <th>Round</th>
-    <th>Fighter 1</th>
-    <th>Fighter 2</th>
-    <th>Winner</th>
-    <th>Status</th>
-  </tr>
-  <tr class="victory">
-    <td>1</td>
-    <td>Thor</td>
-    <td>Lü Bu</td>
-    <td>Thor</td>
-    <td>Completed</td>
-  </tr>
-  <tr class="victory">
-    <td>2</td>
-    <td>Zeus</td>
-    <td>Adam</td>
-    <td>Zeus</td>
-    <td>Completed</td>
-  </tr>
-  <!-- Add more rounds based on how far the anime has gotten -->
-</table>
-
-<footer>
-  <p>&copy; 2025 Record of Ragnarok Fan Project</p>
-</footer>
+  <section class="hero">
+    <video src="banner.mp4" autoplay muted loop playsinline></video>
+  </section>
 
 </body>
 </html>

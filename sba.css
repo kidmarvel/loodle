@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  header {
+    background-color: #009b3a;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+  }
+  
+  section {
+    padding: 20px;
+    margin: 0 10px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    background: #e0f7e9;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-left: 5px solid #009b3a;
+  }
+  
+  .form-button, .whatsapp-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #5e67dd;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  footer {
+    text-align: center;
+    background-color: #ddd;
+    padding: 10px 0;
+    margin-top: 20px;
+  }
+  

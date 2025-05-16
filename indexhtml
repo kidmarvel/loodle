@@ -1,37 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jamaican SBA Help</title>
-  <link rel="stylesheet" href="sba.css"/>
+  <meta charset="UTF-8">
+  <title>Binary Subtraction Practice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121826;
+      color: #f0f0f0;
+      padding: 40px;
+      text-align: center;
+    }
+    select, button {
+      font-size: 1rem;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 1.3rem;
+      color: #00ffcc;
+    }
+    .borrow-step {
+      font-family: monospace;
+      white-space: pre;
+      color: #facc15;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Jamaican SBA Assignment Help</h1>
-    <p>Helping students complete SBAs with ease!</p>
-  </header>
 
-  <section id="services">
-    <h2>Services & Pricing</h2>
-    <ul>
-      <li>English SBA Assistance - J$2000</li>
-      <li>Social Studies SBA Assistance - J$2500</li>
-      <li>Information Technology assistance - J$3000</li>
-      <li>History Assistance - J$2500</li>
-    </ul>
-  </section>
+  <h1>Binary Subtraction Practice</h1>
 
-  <section id="contact">
-    <h2>Request a Service</h2>
-    <p>Please fill out the form below to request a service.</p>
-    <a href="https://forms.gle/VG1PHLvCx3yC5eXV7" target="_blank" class="form-button">Fill Out Request Form</a>
-    <p>Or message me directly on WhatsApp:</p>
-    <a href="whatsapp.html" target="_blank" class="whatsapp-button">Chat on WhatsApp</a>
-  </section>
+  <p>Select a question to simulate:</p>
 
-  <footer>
-    <p>&copy; 2025 Jamaican SBA Help</p>
-  </footer>
+  <select id="questionSelect">
+    <option value="">-- Choose a question --</option>
+    <option value="1">Q1: 1011 - 0101</option>
+    <option value="2">Q2: 10010 - 00111</option>
+  </select>
+  <br>
+  <button onclick="runSelectedQuestion()">Show Subtraction</button>
+
+  <div class="result" id="result"></div>
+  <div class="borrow-step" id="borrowSteps"></div>
+
+  <script>
+    function runSelectedQuestion() {
+      const select = document.getElementById("questionSelect").value;
+      const resultEl = document.getElementById("result");
+      const stepsEl = document.getElementById("borrowSteps");
+
+      let bin1 = "", bin2 = "";
+
+      if (select === "1") {
+        bin1 = "1011";
+        bin2 = "0101";
+      } else if (select === "2") {
+        bin1 = "10010";
+        bin2 = "00111";
+      } else {
+        resultEl.textContent = "Please choose a question.";
+        stepsEl.textContent = "";
+        return;
+      }
+
+      let a = bin1.padStart(Math.max(bin1.length, bin2.length), '0').split('').map(Number);
+      let b = bin2.padStart(a.length, '0').split('').map(Number);
+      let result = [];
+      let borrowSteps = [];
+
+      for (let i = a.length - 1; i >= 0; i--) {
+        if (a[i] < b[i]) {
+          let j = i - 1;
+          while (j >= 0 && a[j] === 0) {
+            a[j] = 1;
+            borrowSteps.push(`Borrowed from position ${j}`);
+            j--;
+          }
+          if (j >= 0) {
+            a[j] = 0;
+            a[i] += 2;
+            borrowSteps.push(`Borrowed from position ${j} to position ${i}`);
+          } else {
+            resultEl.textContent = "Error: Negative result not supported.";
+            stepsEl.textContent = "";
+            return;
+          }
+        }
+        result.unshift(a[i] - b[i]);
+      }
+
+      let resStr = result.join('').replace(/^0+(?!$)/, '');
+      resultEl.textContent = `Result: ${resStr}`;
+      stepsEl.textContent = borrowSteps.length > 0 ? `Borrow Steps:\n${borrowSteps.join('\n')}` : "No borrowing needed.";
+    }
+  </script>
+
 </body>
 </html>

@@ -24,12 +24,23 @@
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       flex-shrink: 0;
+      flex-wrap: wrap;
     }
-    h1 {
-      font-size: 24px;
+    header h1 {
+      font-size: 22px;
       margin: 0;
       font-weight: 700;
       user-select: none;
+    }
+    nav a {
+      margin-left: 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav a:hover,
+    nav a:focus {
+      text-decoration: underline;
     }
     #logoutBtn {
       background-color: #e74c3c;
@@ -41,7 +52,7 @@
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(231,76,60,0.6);
       transition: background-color 0.3s ease;
-      user-select: none;
+      margin-left: 15px;
     }
     #logoutBtn:hover,
     #logoutBtn:focus {
@@ -111,7 +122,6 @@
       line-height: 1.4;
       word-break: break-word;
     }
-    /* Scrollbar for activity list */
     ul#completedActivities::-webkit-scrollbar {
       width: 9px;
     }
@@ -126,7 +136,6 @@
     ul#completedActivities::-webkit-scrollbar-thumb:hover {
       background: #2980b9;
     }
-    /* Loading/Error */
     #statusMessage {
       color: #666;
       font-style: italic;
@@ -139,44 +148,34 @@
 </head>
 <body>
 
-  <header class="navbar" role="banner">
-  <h1>Grade X Portal</h1>
-  <nav role="navigation" aria-label="Primary navigation">
-    <a href="index.html" tabindex="0" aria-label="Go to home page">Home</a>
-    <a href="dashboard.html" tabindex="0" aria-label="Go to dashboard">Dashboard</a>
-    <a href="help.html" tabindex="0" aria-label="Go to help center">Help Center</a>
-    <a href="logout.html" tabindex="0" aria-label="Logout">Logout</a>
-  </nav>
-</header>
-
-
-  <header>
+  <header role="banner">
     <h1>Welcome, <span id="studentName">Student</span></h1>
-    <button id="logoutBtn" aria-label="Logout and return to login page">Logout</button>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" aria-label="Go to Home">Home</a>
+      <a href="dashboard.html" aria-label="Go to Dashboard">Dashboard</a>
+      <a href="help.html" aria-label="Go to Help Center">Help</a>
+      <button id="logoutBtn" aria-label="Logout and return to login page">Logout</button>
+    </nav>
   </header>
 
   <main>
     <section class="progress-container" aria-label="Student progress overview">
       <h3>Your Progress</h3>
-
       <div class="progress-bar-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Your progress in percent">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <div class="progress-percentage" id="progressPercent">0%</div>
-
       <div id="statusMessage">Loading progress...</div>
-
       <ul id="completedActivities" aria-live="polite" aria-atomic="true" tabindex="0" aria-label="List of completed activities"></ul>
     </section>
   </main>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // TODO: Replace with your actual Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCty5Nu4gzIPRz5g1PSJ_cJbbDQ7wkPmJk",
       authDomain: "loodle-learning-hub.firebaseapp.com",
@@ -187,7 +186,6 @@
       appId: "1:545169195509:web:43e3e965fb7efd8659a0bc"
     };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
     const studentNameEl = document.getElementById('studentName');
@@ -197,68 +195,34 @@
     const statusMessageEl = document.getElementById('statusMessage');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // Utility to sanitize and capitalize user display name
     function formatStudentName(email) {
-      if(!email) return "Student";
+      if (!email) return "Student";
       const namePart = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
       return namePart.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
 
-    // Auth check & load data
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
-        window.location.href = "login.html"; // redirected to login if not logged in
+        window.location.href = "login.html";
         return;
       }
       studentNameEl.textContent = formatStudentName(user.email);
-
       loadStudentProgress(user.uid);
     });
 
-    // Load student progress from Firestore
     function loadStudentProgress(uid) {
       statusMessageEl.textContent = "Loading progress...";
-
       firebase.firestore().collection("students").doc(uid).get()
         .then(doc => {
           if (!doc.exists) {
             statusMessageEl.textContent = "No progress data found.";
-            progressBarEl.style.width = '0%';
-            progressBarEl.parentElement.setAttribute('aria-valuenow', 0);
-            progressPercentEl.textContent = '0%';
-            completedActivitiesEl.innerHTML = '';
+            updateProgressUI(0, []);
             return;
           }
           const data = doc.data();
-
-          // Defensive: handle missing keys (progress, activities)
           const progress = typeof data.progress === 'number' ? data.progress : 0;
           const activities = Array.isArray(data.completedActivities) ? data.completedActivities : [];
-
-          // Update progress bar
-          const clampedProgress = Math.min(Math.max(progress, 0), 100);
-          progressBarEl.style.width = clampedProgress + '%';
-          progressBarEl.parentElement.setAttribute('aria-valuenow', clampedProgress);
-          progressPercentEl.textContent = clampedProgress + '%';
-
-          // Populate completed activities list or fallback message
-          completedActivitiesEl.innerHTML = '';
-          if (activities.length === 0) {
-            const li = document.createElement('li');
-            li.textContent = "No activities completed yet. Keep going!";
-            li.style.fontStyle = 'italic';
-            li.style.color = '#888';
-            completedActivitiesEl.appendChild(li);
-          } else {
-            activities.forEach(activity => {
-              const li = document.createElement('li');
-              li.textContent = activity;
-              completedActivitiesEl.appendChild(li);
-            });
-          }
-
-          statusMessageEl.textContent = ""; // Clear loading status
-
+          updateProgressUI(progress, activities);
         })
         .catch(error => {
           statusMessageEl.textContent = "Failed to load progress data.";
@@ -266,12 +230,33 @@
         });
     }
 
-    // Logout button handler
+    function updateProgressUI(progress, activities) {
+      const clampedProgress = Math.min(Math.max(progress, 0), 100);
+      progressBarEl.style.width = clampedProgress + '%';
+      progressBarEl.parentElement.setAttribute('aria-valuenow', clampedProgress);
+      progressPercentEl.textContent = clampedProgress + '%';
+
+      completedActivitiesEl.innerHTML = '';
+      if (activities.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = "No activities completed yet. Keep going!";
+        li.style.fontStyle = 'italic';
+        li.style.color = '#888';
+        completedActivitiesEl.appendChild(li);
+      } else {
+        activities.forEach(activity => {
+          const li = document.createElement('li');
+          li.textContent = activity;
+          completedActivitiesEl.appendChild(li);
+        });
+      }
+
+      statusMessageEl.textContent = "";
+    }
+
     logoutBtn.addEventListener('click', () => {
       firebase.auth().signOut()
-        .then(() => {
-          window.location.href = "login.html";
-        })
+        .then(() => window.location.href = "login.html")
         .catch(err => alert("Logout failed: " + err.message));
     });
   </script>

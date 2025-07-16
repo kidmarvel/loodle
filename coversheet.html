@@ -3,191 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Quiz with Cover Sheet</title>
+  <title>IT Quiz Cover Sheet</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      background: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .header {
+    
+    /* Navbar styles */
+    header {
       background-color: #3498db;
       color: white;
-      text-align: center;
-      padding: 20px;
-      position: relative;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+      flex-wrap: wrap;
     }
-    .music-control {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255,255,255,0.2);
-      padding: 5px 10px;
-      border-radius: 20px;
+    
+    header h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 700;
+      user-select: none;
+    }
+    
+    nav a {
+      margin-left: 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    nav a:hover,
+    nav a:focus {
+      text-decoration: underline;
+    }
+    
+    #logoutBtn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 3px 8px rgba(231,76,60,0.6);
+      transition: background-color 0.3s ease;
+      margin-left: 15px;
     }
+    
+    #logoutBtn:hover,
+    #logoutBtn:focus {
+      background-color: #c0392b;
+      outline: none;
+      box-shadow: 0 0 15px rgba(192,57,43,0.9);
+    }
+    
+    /* Cover sheet styles */
     .container {
-      padding: 20px;
+      flex-grow: 1;
+      padding: 40px 20px;
       max-width: 800px;
       margin: 0 auto;
+      width: 100%;
     }
+    
     .section {
       background: white;
-      padding: 20px;
+      padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
     }
+    
     h1, h2 {
       color: #2c3e50;
       margin-top: 0;
     }
+    
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
+    
     label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       font-weight: bold;
     }
+    
     input[type="text"], input[type="date"], select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 16px;
     }
+    
     button {
       background-color: #27ae60;
       color: white;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-weight: 600;
       display: block;
-      margin: 20px auto;
+      margin: 30px auto 0;
+      transition: background-color 0.3s;
     }
+    
     button:hover {
       background-color: #2ecc71;
     }
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    .question {
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin-top: 10px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+    
     .instructions {
       background-color: #fffde7;
       padding: 15px;
       border-left: 4px solid #ffd600;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       border-radius: 5px;
     }
-    .spelling-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .spelling-option {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .spelling-option:hover {
-      background-color: #f0f0f0;
-    }
-    .spelling-option.selected {
-      background-color: #d4edda;
-      border-color: #c3e6cb;
-    }
-    .drag-drop-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    .computer-image {
-      width: 60%;
-      position: relative;
-    }
-    .labels-container {
-      width: 35%;
-      display: flex;
-      flex-direction: column;
-    }
-    .draggable-label {
-      padding: 10px;
-      margin: 5px 0;
-      background-color: #3498db;
-      color: white;
-      border-radius: 5px;
-      cursor: move;
-      text-align: center;
-      user-select: none;
-    }
-    .draggable-label.dragging {
-      opacity: 0.5;
-    }
-    .drop-zone {
-      position: absolute;
-      background-color: rgba(255, 255, 255, 0.7);
-      border-radius: 5px;
-      padding: 5px;
-      font-size: 12px;
-      text-align: center;
-    }
-    .feedback-container {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f8f9fa;
-      border-radius: 5px;
-      display: none;
-    }
-    .progress-bar {
-      height: 20px;
-      background-color: #e9ecef;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .progress {
-      height: 100%;
-      background-color: #28a745;
-      width: 0%;
-      transition: width 0.5s;
-    }
-    .hidden {
-      display: none;
-    }
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #dff0d8;
-      border: 1px solid #3c763d;
-      color: #3c763d;
-      border-radius: 5px;
-      display: none;
-      text-align: center;
-    }
+    
     .error-message {
       color: #dc3545;
       font-size: 14px;
@@ -196,13 +142,17 @@
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>🖥️ Information Technology Pop Quiz</h1>
-    <div class="music-control" id="musicControl">🔊 Play Music</div>
-  </div>
+  <header role="banner">
+    <h1>IT Quiz Cover Sheet</h1>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" aria-label="Go to Home">Home</a>
+      <a href="dashboard.html" aria-label="Go to Dashboard">Dashboard</a>
+      <a href="help.html" aria-label="Go to Help Center">Help</a>
+      <button id="logoutBtn" aria-label="Logout and return to login page">Logout</button>
+    </nav>
+  </header>
 
   <div class="container">
-    <!-- Exam Cover Sheet Section -->
     <div class="section" id="coverSheet">
       <h2>Exam Cover Sheet</h2>
       <div class="instructions">
@@ -241,511 +191,77 @@
         <button type="button" id="startQuizBtn">Start Quiz</button>
       </form>
     </div>
-
-    <!-- Quiz Section (initially hidden) -->
-    <div class="section hidden" id="quizSection">
-      <h2>Information Technology Pop Quiz</h2>
-      <div class="instructions">
-        <p>Select the correct teacher to begin!</p>
-      </div>
-
-      <div class="progress-bar">
-        <div class="progress" id="quizProgress"></div>
-      </div>
-
-      <form id="quizForm">
-        <!-- Question 1 -->
-        <div class="question">
-          <h3>1. Who is your teacher?</h3>
-          <select id="teacherSelect" required>
-            <option value="">--Select--</option>
-            <option value="correct">Mr. D. Rowe</option>
-            <option value="wrong">Ms. J. Williams</option>
-            <option value="wrong">Mrs. D. Harrison</option>
-          </select>
-        </div>
-
-        <!-- Question 2 -->
-        <div class="question">
-          <h3>2. What is Information?</h3>
-          <select id="q2" required>
-            <option value="">--Select--</option>
-            <option value="correct">Things we learn</option>
-            <option value="wrong">Devices we use</option>
-            <option value="wrong">Websites we visit</option>
-          </select>
-        </div>
-
-        <!-- Question 3 -->
-        <div class="question">
-          <h3>3. What is Technology?</h3>
-          <select id="q3" required>
-            <option value="">--Select--</option>
-            <option value="wrong">Things we learn</option>
-            <option value="correct">Devices we use</option>
-            <option value="wrong">People who teach</option>
-          </select>
-        </div>
-
-        <!-- Question 4 -->
-        <div class="question">
-          <h3>4. What is Information Technology?</h3>
-          <select id="q4" required>
-            <option value="">--Select--</option>
-            <option value="correct">The study of devices we use to learn things</option>
-            <option value="wrong">The art of talking</option>
-            <option value="wrong">Just using phones</option>
-          </select>
-        </div>
-
-        <!-- Question 5 -->
-        <div class="question">
-          <h3>5. What part of the computer is this?</h3>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Keyboard_layout_United_States.svg/1024px-Keyboard_layout_United_States.svg.png" alt="Keyboard">
-          <select id="q5" required>
-            <option value="">--Select--</option>
-            <option value="correct">Keyboard</option>
-            <option value="wrong">Mouse</option>
-            <option value="wrong">Monitor</option>
-          </select>
-        </div>
-
-        <!-- Question 6 -->
-        <div class="question">
-          <h3>6. What part of the computer is this?</h3>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Computer_mouse.jpg" alt="Mouse">
-          <select id="q6" required>
-            <option value="">--Select--</option>
-            <option value="wrong">CPU</option>
-            <option value="correct">Mouse</option>
-            <option value="wrong">Speaker</option>
-          </select>
-        </div>
-
-        <!-- Question 7 -->
-        <div class="question">
-          <h3>7. What part of the computer is this?</h3>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Webcam_example.jpg" alt="Camera">
-          <select id="q7" required>
-            <option value="">--Select--</option>
-            <option value="correct">Camera</option>
-            <option value="wrong">Printer</option>
-            <option value="wrong">Monitor</option>
-          </select>
-        </div>
-
-        <!-- Question 8 - Spelling -->
-        <div class="question">
-          <h3>8. Spelling Check! Choose the correct spelling:</h3>
-          <div class="spelling-options">
-            <div class="spelling-option" data-word="computer">Compyuter</div>
-            <div class="spelling-option correct" data-word="computer">Computer</div>
-            <div class="spelling-option" data-word="computer">Computar</div>
-          </div>
-          <input type="hidden" id="q8" required>
-        </div>
-
-        <!-- Question 9 - Spelling -->
-        <div class="question">
-          <h3>9. Spelling Check! Choose the correct spelling:</h3>
-          <div class="spelling-options">
-            <div class="spelling-option" data-word="speaker">Speeker</div>
-            <div class="spelling-option correct" data-word="speaker">Speaker</div>
-            <div class="spelling-option" data-word="speaker">Speakar</div>
-          </div>
-          <input type="hidden" id="q9" required>
-        </div>
-
-        <!-- Question 10 - Spelling -->
-        <div class="question">
-          <h3>10. Spelling Check! Choose the correct spelling:</h3>
-          <div class="spelling-options">
-            <div class="spelling-option" data-word="device">Devise</div>
-            <div class="spelling-option correct" data-word="device">Device</div>
-            <div class="spelling-option" data-word="device">Divice</div>
-          </div>
-          <input type="hidden" id="q10" required>
-        </div>
-
-        <!-- Question 11 - Spelling -->
-        <div class="question">
-          <h3>11. Spelling Check! Choose the correct spelling:</h3>
-          <div class="spelling-options">
-            <div class="spelling-option" data-word="learn">Lern</div>
-            <div class="spelling-option correct" data-word="learn">Learn</div>
-            <div class="spelling-option" data-word="learn">Learne</div>
-          </div>
-          <input type="hidden" id="q11" required>
-        </div>
-
-        <!-- Question 12 - Spelling -->
-        <div class="question">
-          <h3>12. Spelling Check! Choose the correct spelling:</h3>
-          <div class="spelling-options">
-            <div class="spelling-option" data-word="keyboard">Keybord</div>
-            <div class="spelling-option correct" data-word="keyboard">Keyboard</div>
-            <div class="spelling-option" data-word="keyboard">Keyboared</div>
-          </div>
-          <input type="hidden" id="q12" required>
-        </div>
-
-        <!-- Question 13 -->
-        <div class="question">
-          <h3>13. What do you use a keyboard for?</h3>
-          <select id="q13" required>
-            <option value="">--Select--</option>
-            <option value="correct">To type</option>
-            <option value="wrong">To take pictures</option>
-            <option value="wrong">To move the cursor</option>
-          </select>
-        </div>
-
-        <!-- Question 14 -->
-        <div class="question">
-          <h3>14. What is a mouse for?</h3>
-          <select id="q14" required>
-            <option value="">--Select--</option>
-            <option value="wrong">To print papers</option>
-            <option value="correct">To move the cursor</option>
-            <option value="wrong">To play music</option>
-          </select>
-        </div>
-
-        <!-- Question 15 -->
-        <div class="question">
-          <h3>15. What is the screen used for?</h3>
-          <select id="q15" required>
-            <option value="">--Select--</option>
-            <option value="wrong">To type on</option>
-            <option value="wrong">To move the cursor</option>
-            <option value="correct">To see what the computer is doing</option>
-          </select>
-        </div>
-
-        <!-- Question 16 -->
-        <div class="question">
-          <h3>16. What is the camera used for?</h3>
-          <select id="q16" required>
-            <option value="">--Select--</option>
-            <option value="wrong">To type</option>
-            <option value="correct">To take pictures or video</option>
-            <option value="wrong">To store files</option>
-          </select>
-        </div>
-
-        <!-- Drag and Drop Question -->
-        <div class="question">
-          <h3>17. Label the Computer Parts</h3>
-          <p>Drag the labels to the correct parts of the computer.</p>
-          
-          <div class="drag-drop-container">
-            <div class="computer-image">
-              <img src="https://cdn.pixabay.com/photo/2014/09/24/14/29/desktop-computer-459256_960_720.jpg" alt="Computer System">
-              
-              <!-- Drop zones positioned over the computer image -->
-              <div class="drop-zone" style="top: 10%; left: 50%; width: 100px;" data-part="monitor"></div>
-              <div class="drop-zone" style="top: 70%; left: 50%; width: 100px;" data-part="keyboard"></div>
-              <div class="drop-zone" style="top: 70%; left: 30%; width: 80px;" data-part="mouse"></div>
-              <div class="drop-zone" style="top: 50%; left: 10%; width: 80px;" data-part="cpu"></div>
-            </div>
-            
-            <div class="labels-container">
-              <div class="draggable-label" draggable="true" data-label="monitor">Monitor</div>
-              <div class="draggable-label" draggable="true" data-label="keyboard">Keyboard</div>
-              <div class="draggable-label" draggable="true" data-label="mouse">Mouse</div>
-              <div class="draggable-label" draggable="true" data-label="cpu">CPU</div>
-              <div class="draggable-label" draggable="true" data-label="printer">Printer</div>
-            </div>
-          </div>
-          <input type="hidden" id="q17" required>
-        </div>
-
-        <button type="submit" id="submitQuizBtn">Submit Quiz</button>
-      </form>
-
-      <div class="result" id="result"></div>
-    </div>
   </div>
 
-  <!-- Background music (hidden) -->
-  <audio id="backgroundMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // DOM elements
-      const coverSheet = document.getElementById('coverSheet');
-      const quizSection = document.getElementById('quizSection');
-      const startQuizBtn = document.getElementById('startQuizBtn');
-      const quizForm = document.getElementById('quizForm');
-      const backgroundMusic = document.getElementById('backgroundMusic');
-      const musicControl = document.getElementById('musicControl');
-      const quizProgress = document.getElementById('quizProgress');
-      const resultDiv = document.getElementById('result');
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCty5Nu4gzIPRz5g1PSJ_cJbbDQ7wkPmJk",
+      authDomain: "loodle-learning-hub.firebaseapp.com",
+      databaseURL: "https://loodle-learning-hub-default-rtdb.firebaseio.com",
+      projectId: "loodle-learning-hub",
+      storageBucket: "loodle-learning-hub.appspot.com",
+      messagingSenderId: "545169195509",
+      appId: "1:545169195509:web:43e3e965fb7efd8659a0bc"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      firebase.auth().signOut()
+        .then(() => window.location.href = "login.html")
+        .catch(err => alert("Logout failed: " + err.message));
+    });
+
+    // Check auth state
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Cover sheet validation
+    document.getElementById('startQuizBtn').addEventListener('click', function() {
+      let isValid = true;
       
-      // Form validation for cover sheet
-      startQuizBtn.addEventListener('click', function() {
-        let isValid = true;
-        
-        // Validate full name
-        const fullName = document.getElementById('fullName').value.trim();
-        if (fullName === '') {
-          document.getElementById('nameError').textContent = 'Please enter your full name';
-          isValid = false;
-        } else {
-          document.getElementById('nameError').textContent = '';
-        }
-        
-        // Validate school
-        const school = document.getElementById('school').value.trim();
-        if (school === '') {
-          document.getElementById('schoolError').textContent = 'Please enter your school';
-          isValid = false;
-        } else {
-          document.getElementById('schoolError').textContent = '';
-        }
-        
-        // Validate birth date
-        const birthDate = document.getElementById('birthDate').value;
-        if (birthDate === '') {
-          document.getElementById('dateError').textContent = 'Please enter your birth date';
-          isValid = false;
-        } else {
-          document.getElementById('dateError').textContent = '';
-        }
-        
-        if (isValid) {
-          coverSheet.classList.add('hidden');
-          quizSection.classList.remove('hidden');
-          updateProgress();
-        }
-      });
-      
-      // Music control
-      let isMusicPlaying = false;
-      musicControl.addEventListener('click', function() {
-        if (isMusicPlaying) {
-          backgroundMusic.pause();
-          musicControl.textContent = '🔊 Play Music';
-        } else {
-          backgroundMusic.play();
-          musicControl.textContent = '🔇 Pause Music';
-        }
-        isMusicPlaying = !isMusicPlaying;
-      });
-      
-      // Spelling questions - click handlers
-      document.querySelectorAll('.spelling-options .spelling-option').forEach(option => {
-        option.addEventListener('click', function() {
-          // Remove selected class from siblings
-          this.parentNode.querySelectorAll('.spelling-option').forEach(sibling => {
-            sibling.classList.remove('selected');
-          });
-          
-          // Add selected class to clicked option
-          this.classList.add('selected');
-          
-          // Update the hidden input value
-          const questionId = this.closest('.question').querySelector('input[type="hidden"]').id;
-          document.getElementById(questionId).value = this.classList.contains('correct') ? 'correct' : 'wrong';
-          
-          updateProgress();
-        });
-      });
-      
-      // Drag and drop functionality
-      let draggedLabel = null;
-      
-      document.querySelectorAll('.draggable-label').forEach(label => {
-        label.addEventListener('dragstart', function(e) {
-          draggedLabel = this;
-          setTimeout(() => {
-            this.classList.add('dragging');
-          }, 0);
-        });
-        
-        label.addEventListener('dragend', function() {
-          this.classList.remove('dragging');
-        });
-      });
-      
-      document.querySelectorAll('.drop-zone').forEach(zone => {
-        zone.addEventListener('dragover', function(e) {
-          e.preventDefault();
-        });
-        
-        zone.addEventListener('dragenter', function(e) {
-          e.preventDefault();
-        });
-        
-        zone.addEventListener('drop', function(e) {
-          e.preventDefault();
-          
-          // Check if the label matches the drop zone
-          const correctPart = this.getAttribute('data-part');
-          const labelPart = draggedLabel.getAttribute('data-label');
-          
-          // Remove any existing label in this zone
-          this.innerHTML = '';
-          
-          if (correctPart === labelPart) {
-            // Correct match
-            this.textContent = draggedLabel.textContent;
-            this.style.backgroundColor = '#d4edda';
-            this.style.border = '1px solid #c3e6cb';
-          } else {
-            // Incorrect match
-            this.textContent = draggedLabel.textContent;
-            this.style.backgroundColor = '#f8d7da';
-            this.style.border = '1px solid #f5c6cb';
-          }
-          
-          // Check if all drop zones have labels
-          checkDragDropCompletion();
-          updateProgress();
-        });
-      });
-      
-      function checkDragDropCompletion() {
-        const allZones = document.querySelectorAll('.drop-zone');
-        let allFilled = true;
-        
-        allZones.forEach(zone => {
-          if (zone.textContent.trim() === '') {
-            allFilled = false;
-          }
-        });
-        
-        if (allFilled) {
-          // Count correct matches
-          let correctCount = 0;
-          allZones.forEach(zone => {
-            const correctPart = zone.getAttribute('data-part');
-            const labelText = zone.textContent.trim().toLowerCase();
-            if (labelText === correctPart) {
-              correctCount++;
-            }
-          });
-          
-          // Set the hidden input value (score out of 4)
-          document.getElementById('q17').value = correctCount;
-        }
+      // Validate full name
+      const fullName = document.getElementById('fullName').value.trim();
+      if (fullName === '') {
+        document.getElementById('nameError').textContent = 'Please enter your full name';
+        isValid = false;
+      } else {
+        document.getElementById('nameError').textContent = '';
       }
       
-      // Update progress bar
-      function updateProgress() {
-        const totalQuestions = 17;
-        let answered = 0;
-        
-        // Check multiple choice questions
-        for (let i = 1; i <= 16; i++) {
-          if (i === 8 || i === 9 || i === 10 || i === 11 || i === 12) {
-            // Spelling questions (hidden inputs)
-            if (document.getElementById('q' + i).value !== '') {
-              answered++;
-            }
-          } else {
-            // Regular select questions
-            if (document.getElementById('q' + i).value !== '') {
-              answered++;
-            }
-          }
-        }
-        
-        // Check drag and drop question
-        if (document.getElementById('q17').value !== '') {
-          answered++;
-        }
-        
-        const progressPercent = (answered / totalQuestions) * 100;
-        quizProgress.style.width = progressPercent + '%';
+      // Validate school
+      const school = document.getElementById('school').value.trim();
+      if (school === '') {
+        document.getElementById('schoolError').textContent = 'Please enter your school';
+        isValid = false;
+      } else {
+        document.getElementById('schoolError').textContent = '';
       }
       
-      // Form submission
-      quizForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Calculate score
-        let score = 0;
-        const totalQuestions = 17;
-        
-        // Check teacher question (must be correct to proceed)
-        if (document.getElementById('teacherSelect').value !== 'correct') {
-          alert('Please select the correct teacher before submitting!');
-          return;
-        }
-        
-        // Check multiple choice questions
-        for (let i = 1; i <= 16; i++) {
-          if (document.getElementById('q' + i).value === 'correct') {
-            score++;
-          }
-        }
-        
-        // Check drag and drop question (each correct is 0.25 points)
-        const dragDropScore = parseFloat(document.getElementById('q17').value) || 0;
-        score += dragDropScore;
-        
-        // Calculate percentage
-        const percentage = Math.round((score / totalQuestions) * 100);
-        
-        // Display result
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-          <h3>Quiz Completed!</h3>
-          <p>Your score: ${score.toFixed(1)}/${totalQuestions} (${percentage}%)</p>
-          <p>Thank you for completing the quiz!</p>
-        `;
-        
-        // Scroll to result
-        resultDiv.scrollIntoView({ behavior: 'smooth' });
-        
-        // Send email notification
-        sendEmailNotification(percentage);
-      });
-      
-      // Function to send email notification
-      function sendEmailNotification(score) {
-        const studentName = document.getElementById('fullName').value;
-        const school = document.getElementById('school').value;
-        const birthDate = document.getElementById('birthDate').value;
-        
-        // In a real implementation, you would use a server-side script or email service
-        // This is a simulated version that would work with a backend
-        const emailData = {
-          to: 'rowedante1@gmail.com',
-          subject: `IT Quiz Submission - ${studentName}`,
-          body: `
-            A student has completed the IT Quiz:
-            
-            Name: ${studentName}
-            School: ${school}
-            Birth Date: ${birthDate}
-            Score: ${score}%
-            
-            Quiz completed at: ${new Date().toLocaleString()}
-          `
-        };
-        
-        // For GitHub Pages, you would need to use a serverless function or third-party service
-        // Here we'll just log it and show a message
-        console.log('Email notification:', emailData);
-        console.log('In a real implementation, this would send to rowedante1@gmail.com');
-        
-        // Simulate sending with a timeout
-        setTimeout(() => {
-          console.log('Email sent successfully');
-        }, 1000);
+      // Validate birth date
+      const birthDate = document.getElementById('birthDate').value;
+      if (birthDate === '') {
+        document.getElementById('dateError').textContent = 'Please enter your birth date';
+        isValid = false;
+      } else {
+        document.getElementById('dateError').textContent = '';
       }
       
-      // Initialize progress bar
-      updateProgress();
-      
-      // Add event listeners to update progress when answers change
-      document.querySelectorAll('select').forEach(select => {
-        select.addEventListener('change', updateProgress);
-      });
+      if (isValid) {
+        // In a complete implementation, you would redirect to the quiz or show it
+        alert('Cover sheet submitted successfully! (In a real implementation, this would start the quiz)');
+      }
     });
   </script>
 </body>
